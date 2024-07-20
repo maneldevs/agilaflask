@@ -22,3 +22,13 @@ pip freeze > requirements.txt
 - Crear .gitignore
 - Crear .env
 - Crear la estructura de directoris
+- Crear el fitxer __init__.py dins de src
+- Probar la aplicació:
+```bash
+flask --app src run --debug
+```
+Nota: Escrivint en .env lo següent podem executar l'aplicació amb només -> flask run --debug:
+```
+FLASK_DEBUG=True
+FLASK_APP=src
+```

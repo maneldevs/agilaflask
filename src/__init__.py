@@ -3,12 +3,14 @@ from flask_injector import FlaskInjector, singleton
 from flask_smorest import Api
 
 from src.app.core.application.role_service import RoleService
-from src.app.core.controller import role_controller
+from src.app.core.controller import admin_controller, role_controller
 from src.app.core.persistence.role_repository import RoleRepository
 
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
+
+    app.register_blueprint(admin_controller.bp)
 
     app.config["PROPAGATE_EXCEPTIONS"] = True
     app.config["API_TITLE"] = "Agila"

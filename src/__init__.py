@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_injector import FlaskInjector, singleton
+from flask_smorest import Api
 
 from src.app.core.application.role_service import RoleService
 from src.app.core.controller import role_controller
@@ -9,16 +10,26 @@ from src.app.core.persistence.role_repository import RoleRepository
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
 
-    @app.route("/health")
-    def health():
-        return {"status": "UP"}
+    app.config["PROPAGATE_EXCEPTIONS"] = True
+    app.config["API_TITLE"] = "Agila"
+    app.config["API_VERSION"] = "v1"
+    app.config["OPENAPI_VERSION"] = "3.0.3"
+    app.config["OPENAPI_URL_PREFIX"] = "/"
+    app.config["OPENAPI_SWAGGER_UI_PATH"] = "/api/docs"
+    app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
 
-    app.register_blueprint(role_controller.bp)
+    api = Api(app)
+
+    api.register_blueprint(role_controller.bp)
 
     def configure(binder):
         binder.bind(RoleRepository, to=RoleRepository(), scope=singleton)
         binder.bind(RoleService, to=RoleService(RoleRepository()), scope=singleton)
 
     FlaskInjector(app=app, modules=[configure])
+
+    @app.route("/health")
+    def health():
+        return {"status": "UP"}
 
     return app

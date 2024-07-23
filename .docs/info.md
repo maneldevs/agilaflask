@@ -91,3 +91,11 @@ api.register_blueprint(role_controller.bp)
 ```
 
 - Per vore la documentació de swagger obrir el navegador i anar a http://localhost:5000/api/docs
+
+# 5. Tests
+
+- Instal·lar pytest
+
+```bash
+pip install pytest
+```

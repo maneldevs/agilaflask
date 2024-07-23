@@ -1,4 +1,7 @@
+from src.app.core.application.domain import Role
+
+
 class RoleRepository:
 
     def fetch_all(self):
-        return [{"id": 1, "name": "admin"}, {"id": 2, "name": "user"}]
+        return [Role("1", "admin"), Role("2", "user")]

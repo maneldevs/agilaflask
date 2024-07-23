@@ -1,10 +1,11 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_injector import FlaskInjector, singleton
 from flask_smorest import Api
 
 from src.app.core.application.role_service import RoleService
 from src.app.core.controller import admin_controller, role_controller
 from src.app.core.persistence.role_repository import RoleRepository
+from src.app.shared.exceptions import BaseError
 
 
 def create_app():
@@ -23,6 +24,10 @@ def create_app():
     api = Api(app)
 
     api.register_blueprint(role_controller.bp)
+
+    @app.errorhandler(BaseError)
+    def base_handler(exc: BaseError):
+        return jsonify(message=exc.message, status=exc.status_code), exc.status_code
 
     def configure(binder):
         binder.bind(RoleRepository, to=RoleRepository(), scope=singleton)

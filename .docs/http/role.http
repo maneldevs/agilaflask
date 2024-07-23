@@ -1,0 +1,7 @@
+@url_base=http://localhost:5000/api/core/roles
+
+### GET ALL ROLES INDEX
+GET {{url_base}}
+
+### GET ONE ROLE BY ID
+GET {{url_base}}/2

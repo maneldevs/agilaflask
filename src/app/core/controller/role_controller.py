@@ -14,4 +14,15 @@ class RoleList(MethodView):
         self.role_service = role_service
 
     def get(self):
-        return self.role_service.read_all()
+        return self.role_service.read_all() # TODO mmr to json
+
+
+@bp.route("/api/core/roles/<string:id>")
+class Role(MethodView):
+
+    @inject
+    def __init__(self, role_service: RoleService) -> None:
+        self.role_service = role_service
+
+    def get(self, id):
+        return self.role_service.read_one_by_id(id)
